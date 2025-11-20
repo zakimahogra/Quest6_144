@@ -37,97 +37,87 @@ import com.example.myarsitekturmvvm.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormIsian(
-    pilihanJK:List<String> ,
-    OnSubmitBtnClick : (MutableList<String>) -> Unit,
+fun FormSiswa(
+    pilihanJK: List<String>,
+    OnSubmitBtnClick: (MutableList<String>) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    var txtNama by rememberSaveable { mutableStateOf(value = "") }
-    var txtAlamat by remember { mutableStateOf(value = "") }
-    var txtGender by remember { mutableStateOf(value = "") }
-    val listData: MutableList<String> = mutableListOf(txtNama,txtAlamat,txtGender)
+    var txtNama by rememberSaveable { mutableStateOf("") }
+    var txtAlamat by rememberSaveable { mutableStateOf("") }
+    var txtGender by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
-        modifier = Modifier,
-        {
+        topBar = {
             TopAppBar(
-                title = {
-                    Text(
-                        stringResource(id = R.string.detail),
-                        color = Color.White
-                    )
-                },
+                title = { Text("Form Siswa", color = Color.White) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     colorResource(id = R.color.teal_700)
                 )
             )
         }
     ) { isiRuang ->
+
         Column(
             modifier = Modifier.padding(isiRuang),
-            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            OutlinedTextField(
-                value = "",
-                singleLine = true,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.width(width = 350.dp).padding(top = 20.dp),
-                label = { Text(text = "Nama Lengkap") },
-                onValueChange = {
-                    txtNama = it
-                },
 
-                )
-            HorizontalDivider(
+            // 🔹 Nama
+            OutlinedTextField(
+                value = txtNama,
+                onValueChange = { txtNama = it },
+                label = { Text("Nama Lengkap") },
+                singleLine = true,
                 modifier = Modifier
-                    .padding(20.dp)
-                    .width(250.dp), thickness = Thickness, color =
-                    Color.Red
+                    .width(350.dp)
+                    .padding(top = 20.dp)
             )
+
+            Spacer(Modifier.height(20.dp))
+
+            // 🔹 Gender
             Row {
                 pilihanJK.forEach { item ->
-                    Row(modifier = Modifier.selectable(
-                        selected = txtGender ==item,
-                        onClick = {
-                            txtGender = item
-                        }
-                    ),
-                        verticalAlignment =  Alignment.CenterVertically) {
+                    Row(
+                        modifier = Modifier.selectable(
+                            selected = txtGender == item,
+                            onClick = { txtGender = item }
+                        ),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         RadioButton(
                             selected = txtGender == item,
-                            onClick = {
-                                txtGender = item
-                            }
+                            onClick = { txtGender = item }
                         )
-                        Text(text = item)
+                        Text(item)
                     }
                 }
             }
-            HorizontalDivider(modifier = Modifier
-                .padding(20.dp)
-                .width(250.dp),
-                thickness = 1.dp,
-                color = Color.Red
-            )
+
+            Spacer(Modifier.height(20.dp))
+
+            // 🔹 Alamat
             OutlinedTextField(
                 value = txtAlamat,
+                onValueChange = { txtAlamat = it },
+                label = { Text("Alamat Lengkap") },
                 singleLine = true,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.width(width = 350.dp),
-                label = {Text(text = "Alamat Lengkap")},
-                onValueChange = {
-                    txtAlamat
-                },
+                modifier = Modifier.width(350.dp)
             )
-            Spacer(modifier = Modifier.height(30.dp))
+
+            Spacer(Modifier.height(30.dp))
+
             Button(
-                modifier = Modifier.fillMaxWidth(1f).padding(horizontal = 20.dp),
-                enabled = txtAlamat.isNotEmpty(),
-                onClick = {OnSubmitBtnClick(listData)}
-            ){
-                Text(stringResource(id = R.string.submit))
+                onClick = {
+                    val hasil = mutableListOf(txtNama, txtAlamat, txtGender)
+                    OnSubmitBtnClick(hasil)
+                },
+                enabled = txtNama.isNotEmpty() && txtAlamat.isNotEmpty() && txtGender.isNotEmpty(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            ) {
+                Text("Submit")
             }
         }
     }

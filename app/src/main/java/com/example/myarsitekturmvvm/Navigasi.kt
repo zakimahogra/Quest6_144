@@ -22,3 +22,9 @@ enum class Navigasi {
     Detail
 }
 
+@Composable
+fun SiswaApp(
+    navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier,
+    viewModel: SiswaViewModel = viewModel()
+){

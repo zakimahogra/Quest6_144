@@ -51,3 +51,15 @@ fun SiswaApp(
                 )
             }
 
+            // 🔹 Halaman Detail
+            composable(Navigasi.Detail.name) {
+                TampilSiswa(
+                    statusUiSiswa = uiState.value,
+                    onBackButtonClicked = {
+                        cancelAndBackToFormulirku(navController)
+                    }
+                )
+            }
+        }
+    }
+}

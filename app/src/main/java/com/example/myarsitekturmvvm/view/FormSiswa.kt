@@ -86,3 +86,28 @@ fun FormIsian(
                     .width(250.dp), thickness = Thickness, color =
                     Color.Red
             )
+            Row {
+                pilihanJK.forEach { item ->
+                    Row(modifier = Modifier.selectable(
+                        selected = txtGender ==item,
+                        onClick = {
+                            txtGender = item
+                        }
+                    ),
+                        verticalAlignment =  Alignment.CenterVertically) {
+                        RadioButton(
+                            selected = txtGender == item,
+                            onClick = {
+                                txtGender = item
+                            }
+                        )
+                        Text(text = item)
+                    }
+                }
+            }
+            HorizontalDivider(modifier = Modifier
+                .padding(20.dp)
+                .width(250.dp),
+                thickness = 1.dp,
+                color = Color.Red
+            )

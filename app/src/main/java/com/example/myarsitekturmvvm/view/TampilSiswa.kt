@@ -66,3 +66,5 @@ fun TampilSiswa(
                         Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
                         Text(text = item.second, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Cursive, fontSize = 16.sp)
                     }
+                    Divider(thickness = dimensionResource( R.dimen.thickness_divider))
+                }
